@@ -92,14 +92,7 @@ What we do:
 
 <div align="center">
 
-<img src="https://github-readme-stats.vercel.app/api?username=Amrloksha151&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=43C6FF&icon_color=43C6FF&text_color=ffffff" height="170"/>
-<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Amrloksha151&layout=compact&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=43C6FF&text_color=ffffff" height="170"/>
-
-</div>
-
-<div align="center">
-
-[![GitHub Streak](https://streak-stats.demolab.com?user=Amrloksha151&theme=tokyonight&hide_border=true&background=0d1117&stroke=43C6FF&ring=43C6FF&fire=FF6B6B&currStreakLabel=43C6FF)](https://git.io/streak-stats)
+<img src="https://github-readme-activity-graph.vercel.app/graph?username=Amrloksha151&theme=tokyo-night&hide_border=true&bg_color=0d1117&color=43C6FF&line=43C6FF&point=FF6B6B" width="100%"/>
 
 </div>
 
