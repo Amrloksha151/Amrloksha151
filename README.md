@@ -24,7 +24,7 @@ When I'm not writing code, I'm finding out what breaks it.
 | Project | Description | Live |
 |---|---|---|
 | 🏫 **STEM Gharbiya School Website** | Official website for my school — a public STEM high school in Egypt. Built to showcase academics, alumni, admissions & more. | [stemgh.org](https://stemgh.org) |
-| 🔐 **Gharbiya STEM Hack Club Site** | The official website for the club I lead — Gharbiya STEM Hack Club, part of the global Hack Club network. | [gharbya.hackclub.com](https://gharbya.hackclub.com) |
+| 🔐 **Gharbiya STEM Hack Club Site** | The official website for the club I lead — Gharbiya STEM Hack Club, part of the global Hack Club network. | [gharbya.hackclub.com](https://gharbiyahc.org) |
 
 ---
 
