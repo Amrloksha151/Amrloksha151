@@ -23,8 +23,8 @@ When I'm not writing code, I'm finding out what breaks it.
 
 | Project | Description | Live |
 |---|---|---|
-| 🏫 **STEM Gharbiya School Website** | Official website for my school — a public STEM high school in Egypt. Built to showcase academics, alumni, admissions & more. | [stemgh.org](https://stemgh.org) |
-| 🔐 **Gharbiya STEM Hack Club Site** | The official website for the club I lead — Gharbiya STEM Hack Club, part of the global Hack Club network. | [gharbya.hackclub.com](https://gharbiyahc.org) |
+| 🏫 **STEM Gharbiya School Website** | Official website for my school — a public STEM high school in Egypt. Built to showcase academics, alumni, admissions & more. | [STEM Gharbiya Official School Website](https://stemgh.org) |
+| 🔐 **Gharbiya STEM Hack Club Site** | The official website for the club I lead — Gharbiya STEM Hack Club, part of the global Hack Club network. | [Gharbiya Hack Club Website](https://gharbiyahc.org) |
 
 ---
 
@@ -32,7 +32,7 @@ When I'm not writing code, I'm finding out what breaks it.
 
 I'm deep into web application security. Not just reading about it — **doing it**.
 
-- 🧪 Completed **~40 labs** on [PortSwigger Web Security Academy](https://portswigger.net/web-security)
+- 🧪 Completed **~70 labs** on [PortSwigger Web Security Academy](https://portswigger.net/web-security)
 - 🕷️ Built [**Spidey**](https://github.com/Amrloksha151/Spidey) — a multithreaded web crawler with deep-dig support and cookie handling
 - 🔭 Built [**SocketMapper**](https://github.com/Amrloksha151/SocketMapper) — for mapping open sockets
 - 📝 Writing about security on [Medium](https://medium.com/@Amrloksha.151)
