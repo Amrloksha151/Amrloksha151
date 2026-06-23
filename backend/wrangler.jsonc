@@ -11,7 +11,7 @@
 		"enabled": true
 	},
 	"vars": {
-		"ALLOWED_ORIGINS": "keep_this_as_a_comma_separated_list_of_allowed_origins"
+		"ALLOWED_ORIGINS": "https://amrloksha151.me,https://api.amrloksha151.me"
 	},
 	"upload_source_maps": true,
 	"compatibility_flags": [

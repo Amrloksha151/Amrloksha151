@@ -1,0 +1,128 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SectionWrapper from '../../components/SectionWrapper.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map(project => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+---
+
+<Layout 
+  title={`${project.data.title} | Projects`}
+  description={project.data.description}
+>
+  <SectionWrapper id="project-detail" class="pt-32">
+    <div class="mb-8">
+      <a href="/projects" class="back-link mono terminal-prompt text-sm hover:text-accent-green transition-colors">cd ../</a>
+    </div>
+
+    <article class="card p-8 md:p-12">
+      <header class="mb-10 border-b border-white/10 pb-8">
+        <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
+          <div class="flex items-center gap-3">
+            <span class={`w-2 h-2 rounded-full ${project.data.status === 'active' ? 'bg-accent-green animate-pulse' : project.data.status === 'completed' ? 'bg-accent-blue' : 'bg-text-muted'}`}></span>
+            <span class="mono text-xs uppercase tracking-wider text-text-muted">{project.data.status}</span>
+          </div>
+          <span class="mono text-sm text-accent-green">{project.data.date}</span>
+        </div>
+        
+        <h1 class="section-title text-4xl md:text-5xl mb-6">{project.data.title}</h1>
+        <p class="text-lg text-text-secondary max-w-3xl leading-relaxed">{project.data.description}</p>
+        
+        <div class="flex flex-wrap gap-2 mt-8">
+          {project.data.tags.map((tag: string) => (
+            <span class="badge">{tag}</span>
+          ))}
+        </div>
+
+        <div class="flex flex-wrap gap-4 mt-8 pt-6 border-t border-white/5">
+          {project.data.github && (
+            <a href={project.data.github} target="_blank" rel="noopener noreferrer" class="btn-secondary">
+              <span class="mono">&lt;Source /&gt;</span>
+            </a>
+          )}
+          {project.data.demo && (
+            <a href={project.data.demo} target="_blank" rel="noopener noreferrer" class="btn-primary">
+              <span class="mono">Live Demo ↗</span>
+            </a>
+          )}
+        </div>
+      </header>
+
+      <div class="prose prose-invert prose-green max-w-none">
+        <Content />
+      </div>
+    </article>
+  </SectionWrapper>
+</Layout>
+
+<style is:global>
+  .prose {
+    color: var(--text-primary);
+  }
+  .prose h2 {
+    font-family: var(--font-heading);
+    color: var(--text-primary);
+    margin-top: 2.5em;
+    margin-bottom: 1em;
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid var(--border-color);
+  }
+  .prose h3 {
+    font-family: var(--font-heading);
+    color: var(--text-primary);
+    margin-top: 2em;
+  }
+  .prose p {
+    color: var(--text-secondary);
+    line-height: 1.8;
+  }
+  .prose a {
+    color: var(--accent-green);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--accent-green);
+    transition: all var(--transition-fast);
+  }
+  .prose a:hover {
+    color: var(--bg-primary);
+    background-color: var(--accent-green);
+  }
+  .prose strong {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+  .prose ul, .prose ol {
+    color: var(--text-secondary);
+  }
+  .prose li::marker {
+    color: var(--accent-green);
+  }
+  .prose code {
+    font-family: var(--font-mono);
+    color: var(--accent-blue);
+    background: rgba(56, 189, 248, 0.1);
+    padding: 0.2em 0.4em;
+    border-radius: 0.25rem;
+    font-size: 0.875em;
+  }
+  .prose pre {
+    background: #020617 !important;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.5em;
+    overflow-x: auto;
+  }
+  .prose pre code {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+  }
+</style>

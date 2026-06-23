@@ -1,0 +1,149 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SectionWrapper from '../components/SectionWrapper.astro';
+import servicesData from '../content/services.json';
+---
+
+<Layout
+  title="Services"
+  description="Freelance web security and web development services offered by Amr Loksha."
+>
+  <SectionWrapper id="services-page" class="pt-32">
+    <div class="mb-12 text-center md:text-left">
+      <p class="mono terminal-prompt text-sm text-text-muted mb-2">curl -X GET https://amrloksha151.me/services</p>
+      <h1 class="section-title">Services</h1>
+      <p class="section-subtitle">Security auditing, penetration testing, and secure web development.</p>
+    </div>
+
+    <!-- Services Grid -->
+    <div class="grid md:grid-cols-2 gap-8 mb-20">
+      {servicesData.services.map(service => (
+        <div class="card p-8 flex flex-col h-full group">
+          <div class="flex items-center gap-4 mb-4">
+            <span class="text-3xl p-3 bg-white/5 rounded-lg group-hover:bg-accent-green/10 transition-colors">{service.icon}</span>
+            <h2 class="text-xl font-bold text-text-primary">{service.title}</h2>
+          </div>
+          <p class="text-text-secondary mb-6 flex-grow">{service.description}</p>
+          <div class="mt-auto pt-6 border-t border-white/10 flex justify-between items-center">
+            <span class="mono text-sm text-accent-green">{service.price}</span>
+            <a href={`#inquiry-form`} class="text-sm font-mono text-text-muted hover:text-accent-blue transition-colors" onclick={`document.getElementById('service-select').value='${service.id}'`}>Book Now →</a>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Inquiry Form -->
+    <div class="max-w-3xl mx-auto card p-8 md:p-12" id="inquiry-form-section">
+      <div class="mb-8 border-b border-white/10 pb-6">
+        <h2 class="text-2xl font-bold font-heading mb-2">Request a Service</h2>
+        <p class="text-text-secondary text-sm">Fill out the form below to initiate a discussion about your project needs.</p>
+      </div>
+
+      <form id="inquiry-form" class="space-y-6">
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="form-group">
+            <label for="name" class="form-label">Name / Company</label>
+            <input type="text" id="name" name="name" class="form-input" required minlength="2" placeholder="John Doe">
+          </div>
+          <div class="form-group">
+            <label for="email" class="form-label">Email Address</label>
+            <input type="email" id="email" name="email" class="form-input" required placeholder="john@example.com">
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="form-group">
+            <label for="service-select" class="form-label">Service</label>
+            <select id="service-select" name="service" class="form-input" required>
+              <option value="" disabled selected>Select a service...</option>
+              {servicesData.services.map(s => (
+                <option value={s.id}>{s.title}</option>
+              ))}
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="budget" class="form-label">Estimated Budget (Optional)</label>
+            <input type="text" id="budget" name="budget" class="form-input" placeholder="e.g. $1000 - $5000">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="subject" class="form-label">Project Title</label>
+          <input type="text" id="subject" name="subject" class="form-input" required minlength="5" placeholder="e.g. Penetration Test for E-commerce App">
+        </div>
+
+        <div class="form-group">
+          <label for="details" class="form-label">Project Details</label>
+          <textarea id="details" name="details" class="form-input h-32 resize-y" required minlength="20" placeholder="Please describe your project scope, timeline requirements, and any specific goals..."></textarea>
+        </div>
+
+        <div id="form-status" class="hidden p-4 rounded-md text-sm font-mono mt-4"></div>
+
+        <button type="submit" id="submit-btn" class="btn-primary w-full justify-center py-3 mt-4">
+          <span>Submit Inquiry</span>
+          <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
+          </svg>
+        </button>
+      </form>
+    </div>
+  </SectionWrapper>
+</Layout>
+
+<script>
+  const form = document.getElementById('inquiry-form') as HTMLFormElement;
+  const statusDiv = document.getElementById('form-status') as HTMLDivElement;
+  const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
+
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+      
+      // Basic client-side validation
+      if (data.details.toString().length < 20) {
+        showStatus('error', 'Project details must be at least 20 characters long.');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span class="animate-pulse">Sending...</span>';
+
+      try {
+        const apiUrl = import.meta.env.PUBLIC_API_URL || 'https://api.amrloksha151.me';
+        const response = await fetch(`${apiUrl}/services/inquiry`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          showStatus('success', result.message || 'Inquiry submitted successfully!');
+          form.reset();
+        } else {
+          showStatus('error', result.error || 'Failed to submit inquiry.');
+        }
+      } catch (err) {
+        showStatus('error', 'Network error. Please try again later.');
+        console.error(err);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `<span>Submit Inquiry</span><svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" /></svg>`;
+      }
+    });
+  }
+
+  function showStatus(type: 'success' | 'error', message: string) {
+    statusDiv.className = `p-4 rounded-md text-sm font-mono mt-4 ${
+      type === 'success' 
+        ? 'bg-accent-green/10 text-accent-green border border-accent-green/30' 
+        : 'bg-red-500/10 text-red-400 border border-red-500/30'
+    }`;
+    statusDiv.textContent = `[${type.toUpperCase()}] ${message}`;
+    statusDiv.classList.remove('hidden');
+  }
+</script>

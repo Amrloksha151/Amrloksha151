@@ -1,0 +1,62 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SectionWrapper from '../components/SectionWrapper.astro';
+import educationData from '../content/education.json';
+---
+
+<Layout
+  title="Education"
+  description="My academic background and certifications in computer science and cybersecurity."
+>
+  <SectionWrapper id="education-page" class="pt-32">
+    <div class="mb-12 text-center md:text-left">
+      <p class="mono terminal-prompt text-sm text-text-muted mb-2">./fetch-academics.sh</p>
+      <h1 class="section-title">Education & Certs</h1>
+      <p class="section-subtitle">Academic background and continuous learning.</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-8">
+      <!-- Degrees -->
+      <div>
+        <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+          <span class="text-accent-green">🎓</span> Degrees
+        </h2>
+        <div class="flex flex-col gap-6">
+          {educationData.education.filter(e => e.icon === 'university').map(deg => (
+            <div class="card p-6 border-l-4 border-l-accent-green">
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="text-xl font-bold text-text-primary">{deg.degree}</h3>
+                <span class="mono text-xs text-text-muted bg-white/5 px-2 py-1 rounded">{deg.startYear} - {deg.endYear || 'Present'}</span>
+              </div>
+              <p class="text-accent-blue font-mono text-sm mb-3">{deg.institution}</p>
+              <ul class="text-text-secondary text-sm list-disc list-inside">
+                {deg.highlights.map(h => <li>{h}</li>)}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Certifications -->
+      <div>
+        <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+          <span class="text-accent-blue">📜</span> Certifications
+        </h2>
+        <div class="flex flex-col gap-6">
+          {educationData.education.filter(e => e.icon !== 'university').map(cert => (
+            <div class="card p-6 border-l-4 border-l-accent-blue hover:border-l-accent-green transition-colors">
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="text-lg font-bold text-text-primary">{cert.degree} in {cert.field}</h3>
+                <span class="mono text-xs text-text-muted bg-white/5 px-2 py-1 rounded">{cert.startYear} - {cert.endYear || 'Present'}</span>
+              </div>
+              <p class="text-accent-blue font-mono text-sm mb-3">{cert.institution}</p>
+              <ul class="text-text-secondary text-sm list-disc list-inside">
+                {cert.highlights.map(h => <li>{h}</li>)}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </SectionWrapper>
+</Layout>

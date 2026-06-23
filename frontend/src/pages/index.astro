@@ -1,17 +1,613 @@
 ---
+import Layout from '../layouts/Layout.astro';
+import SectionWrapper from '../components/SectionWrapper.astro';
+import { getCollection } from 'astro:content';
+import skillsData from '../content/skills.json';
 
+const featuredProjects = (await getCollection('projects'))
+  .filter(p => p.data.featured)
+  .sort((a, b) => b.data.date.localeCompare(a.data.date))
+  .slice(0, 4);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout
+  title="Amr Loksha — Security Researcher & Web Developer"
+  description="Amr Loksha is a web security researcher and full-stack developer specializing in HTTP smuggling, cache poisoning, bug bounty, and modern web development."
+>
+  <!-- ===== HERO SECTION ===== -->
+  <section class="hero" id="hero" aria-label="Hero section">
+    <div class="hero-grid-overlay" aria-hidden="true"></div>
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-badge animate-fade-up">
+          <span class="badge">Available for work</span>
+          <span class="badge badge-blue">Bug Bounty</span>
+        </div>
+
+        <p class="hero-greeting animate-fade-up animate-delay-100 mono terminal-prompt">
+          whoami
+        </p>
+
+        <h1 class="hero-title animate-fade-up animate-delay-200">
+          <span class="hero-name glitch-text">Amr Loksha</span>
+          <br />
+          <span class="hero-descriptor">
+            <span class="glow-text">Security Researcher</span>
+            <span class="hero-sep">&</span>
+            <span class="glow-text-blue">Web Developer</span>
+          </span>
+        </h1>
+
+        <p class="hero-tagline mono animate-fade-up animate-delay-300">
+          <span class="text-muted"># </span>I break the web to make it safer.
+          <br />
+          <span class="text-muted"># </span>Then I build it back — faster.
+        </p>
+
+        <p class="hero-description animate-fade-up animate-delay-400">
+          Specializing in HTTP request smuggling, CDN cache poisoning, bug bounty hunting,
+          and building high-performance serverless web applications on the edge.
+        </p>
+
+        <div class="hero-actions animate-fade-up animate-delay-500">
+          <a href="/projects" id="hero-view-projects-btn" class="btn-primary">
+            <span>View Projects</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+          <a href="/contact" id="hero-contact-btn" class="btn-secondary">Get in Touch</a>
+        </div>
+
+        <div class="hero-stats animate-fade-up animate-delay-500">
+          <div class="stat">
+            <span class="stat-value glow-text">$4.5K+</span>
+            <span class="stat-label">Bug Bounties Earned</span>
+          </div>
+          <div class="stat-divider" aria-hidden="true"></div>
+          <div class="stat">
+            <span class="stat-value glow-text">3+</span>
+            <span class="stat-label">Years Security Research</span>
+          </div>
+          <div class="stat-divider" aria-hidden="true"></div>
+          <div class="stat">
+            <span class="stat-value glow-text">4.9/5</span>
+            <span class="stat-label">HackerOne Signal</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual animate-fade-up animate-delay-300" aria-hidden="true">
+        <div class="terminal-window">
+          <div class="terminal-header">
+            <div class="terminal-dot dot-red"></div>
+            <div class="terminal-dot dot-yellow"></div>
+            <div class="terminal-dot dot-green"></div>
+            <span class="terminal-title">amrloksha151 — bash</span>
+          </div>
+          <div class="terminal-body">
+            <div class="terminal-line">
+              <span class="t-prompt">amr@edge</span><span class="t-sep">:</span><span class="t-path">~</span><span class="t-sym">$ </span>
+              <span class="t-cmd">curl -I https://target.com/api -H "Transfer-Encoding: chunked"</span>
+            </div>
+            <div class="terminal-line t-output">HTTP/1.1 200 OK</div>
+            <div class="terminal-line t-output">X-Served-By: cache-cdg2-CDGXXXXXX</div>
+            <div class="terminal-line t-output">Via: 1.1 varnish</div>
+            <div class="terminal-line t-comment"># Interesting... TE header accepted</div>
+            <div class="terminal-line">
+              <span class="t-prompt">amr@edge</span><span class="t-sep">:</span><span class="t-path">~</span><span class="t-sym">$ </span>
+              <span class="t-cmd">python smuggle-scan.py --mode CL.TE --url https://target.com/</span>
+            </div>
+            <div class="terminal-line t-success">[+] Potential CL.TE smuggling detected!</div>
+            <div class="terminal-line t-success">[+] Time delta: 10.3s — timing oracle confirmed</div>
+            <div class="terminal-line t-success">[+] Writing report...</div>
+            <div class="terminal-line">
+              <span class="t-prompt">amr@edge</span><span class="t-sep">:</span><span class="t-path">~</span><span class="t-sym">$ </span>
+              <span class="cursor-blink"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SKILLS SECTION ===== -->
+  <SectionWrapper id="skills">
+    <div class="section-header">
+      <h2 class="section-title">Technical Skills</h2>
+      <p class="section-subtitle">
+        A snapshot of the technologies and disciplines I work with daily.
+      </p>
+    </div>
+
+    <div class="skills-grid" id="skills-grid">
+      {skillsData.categories.map((category) => (
+        <div class="card skills-card" data-category={category.name}>
+          <div class="skills-card-header">
+            <span class="skills-icon">{
+              category.icon === 'shield' ? '🔐' :
+              category.icon === 'zap' ? '⚡' :
+              category.icon === 'globe' ? '🌐' : '🔬'
+            }</span>
+            <h3 class="skills-category-name">{category.name}</h3>
+          </div>
+          <ul class="skills-list">
+            {category.skills.map((skill) => (
+              <li class="skill-item">
+                <div class="skill-header">
+                  <span class="skill-name">{skill.name}</span>
+                  <span class="skill-level mono">{skill.level}%</span>
+                </div>
+                <div class="skill-bar">
+                  <div
+                    class="skill-bar-fill"
+                    data-level={skill.level}
+                    style={`width: ${skill.level}%`}
+                  ></div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </SectionWrapper>
+
+  <!-- ===== PROJECTS OVERVIEW ===== -->
+  <SectionWrapper id="projects-overview" class="projects-section">
+    <div class="section-header">
+      <h2 class="section-title">Featured Projects</h2>
+      <p class="section-subtitle">
+        Security research, tools, and open source work.
+      </p>
+    </div>
+
+    <div class="projects-grid">
+      {featuredProjects.map((project) => (
+        <a href={`/projects/${project.id}`} id={`project-card-${project.id}`} class="card project-card">
+          <div class="project-card-inner">
+            <div class="project-header">
+              <div class="project-status">
+                <span class={`status-dot ${project.data.status === 'active' ? 'dot-active' : project.data.status === 'completed' ? 'dot-completed' : 'dot-archived'}`}></span>
+                <span class="status-label mono">{project.data.status}</span>
+              </div>
+              <span class="project-date mono">{project.data.date}</span>
+            </div>
+
+            <h3 class="project-title">{project.data.title}</h3>
+            <p class="project-description">{project.data.description}</p>
+
+            <div class="project-tags">
+              {project.data.tags.slice(0, 4).map(tag => (
+                <span class="badge">{tag}</span>
+              ))}
+            </div>
+
+            <div class="project-footer">
+              <span class="project-link">View Details →</span>
+              {project.data.github && (
+                <span class="mono text-muted" style="font-size: 0.75rem;">GitHub ↗</span>
+              )}
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <div class="section-cta">
+      <a href="/projects" id="all-projects-btn" class="btn-primary">
+        View All Projects
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+  </SectionWrapper>
+</Layout>
+
+<style>
+  /* ===== HERO ===== */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 6rem 0 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+    pointer-events: none;
+  }
+
+  .hero > .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .hero-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .hero-badge {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .hero-greeting {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  .hero-title {
+    font-size: clamp(2.25rem, 5vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+
+  .hero-name {
+    display: block;
+    color: var(--text-primary);
+  }
+
+  .hero-descriptor {
+    display: block;
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    font-weight: 600;
+    margin-top: 0.25rem;
+  }
+
+  .hero-sep {
+    color: var(--text-muted);
+    margin: 0 0.5rem;
+  }
+
+  .hero-tagline {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin: 0;
+  }
+
+  .hero-description {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    max-width: 500px;
+    margin: 0;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    margin-top: 0.5rem;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .stat-divider {
+    width: 1px;
+    background: var(--border-color);
+    align-self: stretch;
+  }
+
+  /* ===== TERMINAL ===== */
+  .terminal-window {
+    background: rgba(7, 7, 15, 0.9);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5), var(--glow-green);
+    backdrop-filter: blur(10px);
+  }
+
+  .terminal-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.25rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .terminal-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+  .dot-red { background: #ff5f57; }
+  .dot-yellow { background: #febc2e; }
+  .dot-green { background: #28c840; }
+
+  .terminal-title {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-left: 0.5rem;
+  }
+
+  .terminal-body {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    line-height: 1.6;
+  }
+
+  .terminal-line { display: flex; flex-wrap: wrap; gap: 0; }
+  .t-prompt { color: var(--accent-green); }
+  .t-sep { color: var(--text-muted); }
+  .t-path { color: var(--accent-blue); }
+  .t-sym { color: var(--text-secondary); }
+  .t-cmd { color: var(--text-primary); word-break: break-all; }
+  .t-output { color: var(--text-muted); padding-left: 0; }
+  .t-comment { color: #475569; font-style: italic; }
+  .t-success { color: var(--accent-green); }
+
+  /* ===== SKILLS ===== */
+  .section-header {
+    margin-bottom: 3rem;
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .skills-card {
+    padding: 1.75rem;
+  }
+
+  .skills-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .skills-icon {
+    font-size: 1.5rem;
+  }
+
+  .skills-category-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+  }
+
+  .skills-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .skill-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+
+  .skill-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .skill-name {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+  }
+
+  .skill-level {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  /* ===== PROJECTS ===== */
+  .projects-section {
+    background: linear-gradient(180deg, transparent, rgba(0, 255, 136, 0.02), transparent);
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    display: block;
+    text-decoration: none;
+    padding: 1.75rem;
+  }
+
+  .project-card-inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 0.875rem;
+  }
+
+  .project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .project-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+
+  .dot-active {
+    background: var(--accent-green);
+    box-shadow: 0 0 6px var(--accent-green);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  .dot-completed { background: var(--accent-blue); }
+  .dot-archived { background: var(--text-muted); }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .status-label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .project-date {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .project-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+    transition: color var(--transition-fast);
+  }
+
+  .project-card:hover .project-title {
+    color: var(--accent-green);
+  }
+
+  .project-description {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
+    flex: 1;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+  }
+
+  .project-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.25rem;
+    padding-top: 0.875rem;
+    border-top: 1px solid var(--border-color);
+  }
+
+  .project-link {
+    font-size: 0.8rem;
+    color: var(--accent-green);
+    font-family: var(--font-mono);
+    transition: letter-spacing var(--transition-fast);
+  }
+
+  .project-card:hover .project-link {
+    letter-spacing: 0.05em;
+  }
+
+  .section-cta {
+    text-align: center;
+    margin-top: 3rem;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 900px) {
+    .hero > .container {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-visual {
+      order: -1;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero-stats {
+      gap: 1rem;
+    }
+
+    .stat-divider {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  // Animate skill bars when in viewport
+  const skillBars = document.querySelectorAll('.skill-bar-fill');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const bar = entry.target as HTMLElement;
+        bar.style.transition = 'width 1.2s cubic-bezier(0.4, 0, 0.2, 1)';
+        observer.unobserve(bar);
+      }
+    });
+  }, { threshold: 0.2 });
+
+  skillBars.forEach(bar => observer.observe(bar));
+</script>
