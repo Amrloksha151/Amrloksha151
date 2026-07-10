@@ -1,5 +1,7 @@
 ---
 import "../styles/global.css";
+import { ClientRouter } from "astro:transitions";
+import soundTrack from "../assets/audio/sound-track.mp3";
 
 const { title } = Astro.props;
 ---
@@ -7,13 +9,15 @@ const { title } = Astro.props;
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
+    <ClientRouter />
     <title>{title}</title>
   </head>
   <body>
+    <audio id="bg-music" src={soundTrack} loop muted autoplay preload="auto" data-astro-transition-persist="bg-music"></audio>
+
     <header class="fixed top-0 left-0 right-0 z-50 border-b border-border" style="background: var(--bg); border-color: var(--border); backdrop-filter: blur(12px);">
       <nav class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
         <a href="/" class="group relative font-body text-sm font-semibold tracking-tight" style="color: var(--text);">
@@ -30,7 +34,19 @@ const { title } = Astro.props;
           <a href="/projects" class="relative text-sm transition-colors duration-200" style="color: var(--text-secondary);" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-secondary)'">
             Projects
           </a>
-          <button id="theme-toggle" class="flex h-8 w-8 items-center justify-center rounded-lg border transition-all duration-200 cursor-pointer" style="border-color: var(--border); color: var(--text-muted);" aria-label="Toggle theme">
+          <button id="music-toggle" data-astro-transition-persist="music-toggle" class="flex h-8 w-8 items-center justify-center rounded-lg border transition-all duration-200 cursor-pointer" style="border-color: var(--border); color: var(--text-muted);" aria-label="Toggle background music">
+            <svg id="music-off-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+              <line x1="23" y1="9" x2="17" y2="15"/>
+              <line x1="17" y1="9" x2="23" y2="15"/>
+            </svg>
+            <svg id="music-on-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+            </svg>
+          </button>
+          <button id="theme-toggle" data-astro-transition-persist="theme-toggle" class="flex h-8 w-8 items-center justify-center rounded-lg border transition-all duration-200 cursor-pointer" style="border-color: var(--border); color: var(--text-muted);" aria-label="Toggle theme">
             <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
             </svg>
@@ -57,22 +73,62 @@ const { title } = Astro.props;
     </footer>
 
     <script>
-      const html = document.documentElement;
-      const sun = document.getElementById("sun-icon");
-      const moon = document.getElementById("moon-icon");
-      const stored = localStorage.getItem("theme");
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      const isDark = stored === "dark" || (!stored && prefersDark);
-      if (isDark) {
-        html.classList.add("dark");
-        sun.style.display = "none";
-        moon.style.display = "";
-      }
-      document.getElementById("theme-toggle").addEventListener("click", () => {
-        const nowDark = html.classList.toggle("dark");
-        localStorage.setItem("theme", nowDark ? "dark" : "light");
-        sun.style.display = nowDark ? "none" : "";
-        moon.style.display = nowDark ? "" : "none";
+      document.addEventListener("astro:page-load", () => {
+        // === Theme ===
+        const stored = localStorage.getItem("theme");
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        const isDark = stored === "dark" || (!stored && prefersDark);
+        document.documentElement.classList.toggle("dark", isDark);
+
+        const sun = document.getElementById("sun-icon");
+        const moon = document.getElementById("moon-icon");
+        if (sun && moon) {
+          sun.style.display = isDark ? "none" : "";
+          moon.style.display = isDark ? "" : "none";
+        }
+
+        const themeBtn = document.getElementById("theme-toggle");
+        if (themeBtn && !themeBtn._hasListener) {
+          themeBtn._hasListener = true;
+          themeBtn.addEventListener("click", () => {
+            const nowDark = document.documentElement.classList.toggle("dark");
+            localStorage.setItem("theme", nowDark ? "dark" : "light");
+            document.getElementById("sun-icon").style.display = nowDark ? "none" : "";
+            document.getElementById("moon-icon").style.display = nowDark ? "" : "none";
+          });
+        }
+
+        // === Music ===
+        const audio = document.getElementById("bg-music");
+        if (audio && !audio._restored) {
+          audio._restored = true;
+          const storedMusic = localStorage.getItem("music");
+          if (storedMusic === "on") {
+            audio.muted = false;
+            audio.play();
+          }
+        }
+
+        const offIcon = document.getElementById("music-off-icon");
+        const onIcon = document.getElementById("music-on-icon");
+        if (audio && offIcon && onIcon) {
+          offIcon.style.display = audio.muted ? "" : "none";
+          onIcon.style.display = audio.muted ? "none" : "";
+        }
+
+        const musicBtn = document.getElementById("music-toggle");
+        if (musicBtn && !musicBtn._hasListener) {
+          musicBtn._hasListener = true;
+          musicBtn.addEventListener("click", () => {
+            const a = document.getElementById("bg-music");
+            const wasMuted = a.muted;
+            a.muted = !wasMuted;
+            localStorage.setItem("music", wasMuted ? "on" : "off");
+            if (wasMuted) a.play();
+            document.getElementById("music-off-icon").style.display = wasMuted ? "none" : "";
+            document.getElementById("music-on-icon").style.display = wasMuted ? "" : "none";
+          });
+        }
       });
     </script>
   </body>
