@@ -2,29 +2,29 @@
 import Layout from "../layouts/Layout.astro";
 import { getCollection, render } from "astro:content";
 
-const services = await getCollection("services");
-services.sort((a, b) => a.data.order - b.data.order);
+const skills = await getCollection("skills");
+skills.sort((a, b) => a.data.order - b.data.order);
 
-const renderedServices = await Promise.all(
-  services.map(async (service) => {
-    const { Content } = await render(service);
-    return { ...service, Content };
+const renderedSkills = await Promise.all(
+  skills.map(async (skill) => {
+    const { Content } = await render(skill);
+    return { ...skill, Content };
   })
 );
 ---
 
-<Layout title="Services — Amr Yasser Loksha">
+<Layout title="Skills — Amr Yasser Loksha">
   <div class="mx-auto max-w-4xl">
     <div class="flex items-center gap-3">
-      <span class="font-hand text-sm" style="color: var(--accent);">Services</span>
+      <span class="font-hand text-sm" style="color: var(--accent);">Skills</span>
       <span class="h-px flex-1" style="background: var(--border);"></span>
     </div>
 
     <h1 class="mt-6 text-3xl font-light tracking-tight sm:text-4xl md:text-5xl" style="color: var(--text);">
-      What I do
+      Skills & expertise
     </h1>
     <p class="mt-3 max-w-2xl leading-relaxed text-secondary">
-      I bring together development, security, and community to build things that matter.
+      Development, security, and community — the crafts I bring to every project.
     </p>
 
     <!-- Hand-drawn wavy line -->
@@ -33,27 +33,27 @@ const renderedServices = await Promise.all(
     </svg>
 
     <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {renderedServices.map((service) => (
+      {renderedSkills.map((skill) => (
         <div class="group rounded-2xl p-7 transition-all duration-300" style="border: 1px solid var(--border); background: var(--surface);" onmouseover="this.style.borderColor='color-mix(in srgb, var(--accent) 30%, transparent)'; this.style.background='var(--surface-2)'" onmouseout="this.style.borderColor='var(--border)'; this.style.background='var(--surface)'">
           <div class="mb-5 flex h-11 w-11 items-center justify-center rounded-xl transition-all duration-300" style="border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent); background: color-mix(in srgb, var(--accent) 5%, transparent); color: var(--accent);" onmouseover="this.style.background='color-mix(in srgb, var(--accent) 10%, transparent)'; this.style.borderColor='color-mix(in srgb, var(--accent) 40%, transparent)'" onmouseout="this.style.background='color-mix(in srgb, var(--accent) 5%, transparent)'; this.style.borderColor='color-mix(in srgb, var(--accent) 20%, transparent)'">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              {service.data.icon === "code" && <>
+              {skill.data.icon === "code" && <>
                 <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
               </>}
-              {service.data.icon === "shield" && <>
+              {skill.data.icon === "shield" && <>
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
               </>}
-              {service.data.icon === "users" && <>
+              {skill.data.icon === "users" && <>
                 <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
               </>}
             </svg>
           </div>
-          <h2 class="text-lg font-semibold" style="color: var(--text);">{service.data.title}</h2>
+          <h2 class="text-lg font-semibold" style="color: var(--text);">{skill.data.title}</h2>
           <p class="mt-3 text-sm leading-relaxed text-secondary">
-            {service.data.description}
+            {skill.data.description}
           </p>
           <div class="mt-4 text-xs leading-relaxed" style="color: var(--text-muted); [&>p]:mt-2 [&>p:first-child]:mt-0">
-            <service.Content />
+            <skill.Content />
           </div>
         </div>
       ))}

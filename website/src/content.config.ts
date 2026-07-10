@@ -11,8 +11,8 @@ const about = defineCollection({
   }),
 });
 
-const services = defineCollection({
-  loader: glob({ pattern: "*.md", base: "./src/content/services" }),
+const skills = defineCollection({
+  loader: glob({ pattern: "*.md", base: "./src/content/skills" }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
@@ -33,4 +33,4 @@ const projects = defineCollection({
   }),
 });
 
-export const collections = { about, services, projects };
+export const collections = { about, skills, projects };
