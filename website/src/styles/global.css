@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Quicksand:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-body: 'Quicksand', sans-serif;
+  --font-hand: 'Caveat', cursive;
+}
+
+:root {
+  --bg: #FAF7F5;
+  --surface: #FFFFFF;
+  --surface-2: #F5F0EB;
+  --text: #1C1816;
+  --text-secondary: #5C534C;
+  --text-muted: #8C837C;
+  --accent: #B5651D;
+  --accent-soft: #C67B5C;
+  --warm: #C67B5C;
+  --gold: #B88A44;
+  --border: #E5DDD6;
+  --border-hover: #C4B8AE;
+}
+
+.dark {
+  --bg: #1A1816;
+  --surface: #242220;
+  --surface-2: #2E2B28;
+  --text: #F0EDE8;
+  --text-secondary: #A09890;
+  --text-muted: #706860;
+  --accent: #D4895A;
+  --accent-soft: #C67B5C;
+  --warm: #D4895A;
+  --gold: #C49A4A;
+  --border: #3A3530;
+  --border-hover: #504A44;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Quicksand', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+::selection {
+  background: var(--accent);
+  color: white;
+}
+
+.bg-base { background: var(--bg); }
+.bg-surface { background: var(--surface); }
+.bg-surface-2 { background: var(--surface-2); }
+.text-primary { color: var(--text); }
+.text-secondary { color: var(--text-secondary); }
+.text-muted { color: var(--text-muted); }
+.text-accent { color: var(--accent); }
+.text-accent-soft { color: var(--accent-soft); }
+.text-warm { color: var(--warm); }
+.text-gold { color: var(--gold); }
+.border-border { border-color: var(--border); }
+.border-accent { border-color: var(--accent); }
+.border-accent\/20 { border-color: color-mix(in srgb, var(--accent) 20%, transparent); }
+.border-accent\/30 { border-color: color-mix(in srgb, var(--accent) 30%, transparent); }
+.border-accent\/40 { border-color: color-mix(in srgb, var(--accent) 40%, transparent); }
+.hover\:border-accent\/30:hover { border-color: color-mix(in srgb, var(--accent) 30%, transparent); }
+.hover\:border-accent:hover { border-color: var(--accent); }
+.hover\:border-border-hover:hover { border-color: var(--border-hover); }
+.hover\:bg-accent\/5:hover { background: color-mix(in srgb, var(--accent) 5%, transparent); }
+.hover\:bg-accent\/10:hover { background: color-mix(in srgb, var(--accent) 10%, transparent); }
+.hover\:bg-surface-2:hover { background: var(--surface-2); }
+.hover\:text-primary:hover { color: var(--text); }
+.hover\:text-accent:hover { color: var(--accent); }
+.hover\:text-accent-soft:hover { color: var(--accent-soft); }
+.group:hover .group-hover\:text-accent { color: var(--accent); }
+.group:hover .group-hover\:bg-accent\/10 { background: color-mix(in srgb, var(--accent) 10%, transparent); }
+.accent\/5 { background: color-mix(in srgb, var(--accent) 5%, transparent); }
+.accent\/10 { background: color-mix(in srgb, var(--accent) 10%, transparent); }
+.bg-accent { background: var(--accent); }
+.text-white { color: white; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-0.5deg); }
+  50% { transform: rotate(0.5deg); }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-wiggle {
+  animation: wiggle 3s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,79 @@
+---
+import "../styles/global.css";
+
+const { title } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header class="fixed top-0 left-0 right-0 z-50 border-b border-border" style="background: var(--bg); border-color: var(--border); backdrop-filter: blur(12px);">
+      <nav class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
+        <a href="/" class="group relative font-body text-sm font-semibold tracking-tight" style="color: var(--text);">
+          amrloksha
+          <span class="absolute -bottom-1 left-0 h-[2px] w-0 transition-all duration-300 group-hover:w-full" style="background: var(--accent);"></span>
+        </a>
+        <div class="flex items-center gap-6 sm:gap-8">
+          <a href="/about" class="relative text-sm transition-colors duration-200" style="color: var(--text-secondary);" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-secondary)'">
+            About
+          </a>
+          <a href="/services" class="relative text-sm transition-colors duration-200" style="color: var(--text-secondary);" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-secondary)'">
+            Services
+          </a>
+          <a href="/projects" class="relative text-sm transition-colors duration-200" style="color: var(--text-secondary);" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-secondary)'">
+            Projects
+          </a>
+          <button id="theme-toggle" class="flex h-8 w-8 items-center justify-center rounded-lg border transition-all duration-200 cursor-pointer" style="border-color: var(--border); color: var(--text-muted);" aria-label="Toggle theme">
+            <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+            </svg>
+            <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <main class="mx-auto max-w-5xl px-6 pt-28 pb-20">
+      <slot />
+    </main>
+
+    <footer class="border-t" style="border-color: var(--border);">
+      <div class="mx-auto flex max-w-5xl flex-col items-center gap-3 px-6 py-10 text-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="80" height="12" viewBox="0 0 80 12" fill="none">
+          <path d="M2 6 C 10 1, 20 11, 30 6 C 40 1, 50 11, 60 6 C 70 1, 78 10, 78 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.4" style="stroke: var(--accent);"/>
+        </svg>
+        <p class="text-sm" style="color: var(--text-muted);">&copy; {new Date().getFullYear()} Amr Yasser Loksha</p>
+        <p class="font-hand text-xs" style="color: var(--text-muted); opacity: 0.6;">ship. break. learn. repeat.</p>
+      </div>
+    </footer>
+
+    <script>
+      const html = document.documentElement;
+      const sun = document.getElementById("sun-icon");
+      const moon = document.getElementById("moon-icon");
+      const stored = localStorage.getItem("theme");
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      const isDark = stored === "dark" || (!stored && prefersDark);
+      if (isDark) {
+        html.classList.add("dark");
+        sun.style.display = "none";
+        moon.style.display = "";
+      }
+      document.getElementById("theme-toggle").addEventListener("click", () => {
+        const nowDark = html.classList.toggle("dark");
+        localStorage.setItem("theme", nowDark ? "dark" : "light");
+        sun.style.display = nowDark ? "none" : "";
+        moon.style.display = nowDark ? "" : "none";
+      });
+    </script>
+  </body>
+</html>

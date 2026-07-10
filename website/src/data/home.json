@@ -1,0 +1,26 @@
+{
+  "hero": {
+    "greeting": "Hey, I'm",
+    "name": "Amr Yasser Loksha",
+    "tagline": "Full Stack Developer & Web Security Researcher",
+    "description": "I build real websites for real institutions, hunt vulnerabilities, and lead a community of future hackers and builders. When I'm not writing code, I'm finding out what breaks it.",
+    "ctaPrimary": { "label": "Explore my work", "href": "/projects" },
+    "ctaSecondary": { "label": "About me", "href": "/about" }
+  },
+  "socialLinks": [
+    { "label": "GitHub", "url": "https://github.com/Amrloksha151", "icon": "github" },
+    { "label": "Medium", "url": "https://medium.com/@Amrloksha.151", "icon": "medium" },
+    { "label": "Instagram", "url": "https://www.instagram.com/amrloksha151/", "icon": "instagram" },
+    { "label": "PortSwigger", "url": "https://portswigger.net/web-security", "icon": "shield" }
+  ],
+  "highlights": [
+    { "emojiUnused": "school", "label": "Student at", "value": "Gharbiya STEM High School", "url": "https://stemgh.org" },
+    { "emojiUnused": "club", "label": "Leader at", "value": "Gharbiya STEM Hack Club", "url": "https://gharbiyahc.org" },
+    { "emojiUnused": "labs", "label": "Completed", "value": "~70 PortSwigger Labs" },
+    { "emojiUnused": "tools", "label": "Built", "value": "Spidey & SocketMapper" }
+  ],
+  "seo": {
+    "title": "Amr Yasser Loksha — Full Stack Developer & Web Security Researcher",
+    "description": "Personal website of Amr Yasser Loksha — full stack developer, web security researcher, and Hack Club leader from Gharbiya, Egypt."
+  }
+}
