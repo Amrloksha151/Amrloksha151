@@ -53,7 +53,7 @@ const base = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '') || '';
         <div
           class="cf-turnstile flex justify-center rounded-xl p-4"
           style="border: 1px solid var(--border); background: var(--surface); min-height: 72px;"
-          data-sitekey="{turnstileSiteKey}"
+          data-sitekey={turnstileSiteKey}
           data-callback="onTurnstileSuccess"
           data-expired-callback="onTurnstileExpired"
           data-error-callback="onTurnstileError"
