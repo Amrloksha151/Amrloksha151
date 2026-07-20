@@ -1,9 +1,9 @@
 import express from 'express';
 import cors from 'cors';
-import cloudflareRateLimit from './middleware/cloudflareRateLimit.js';
 import router from './routers/index.js';
 import { env } from "cloudflare:workers";
 import { httpServerHandler } from "cloudflare:node";
+import { cloudflareRateLimit } from './middleware/cloudflareRateLimit.js';
 
 const app = express();
 
