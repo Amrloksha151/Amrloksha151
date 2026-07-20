@@ -101,7 +101,7 @@ const html = (data) => `<!DOCTYPE html>
 <body>
     <div class="header">
     <h1><span class="accent">✦</span> New Contact Message</h1>
-    <span class="hand" style="display:block;margin-top:4px;font-size:13px;color:#9A8A7A;">from amrloksha151.dev</span>
+    <span class="hand" style="display:block;margin-top:4px;font-size:13px;color:#9A8A7A;">from amrloksha151.me</span>
     <span class="line"></span>
   </div>
 

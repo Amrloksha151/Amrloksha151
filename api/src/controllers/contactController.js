@@ -8,10 +8,29 @@ const resend = new Resend(env.RESEND_API_KEY);
 
 async function sendContactMessage(req, res) {
   try {
-    const { name, email, phone, subject, message } = req.body;
+    const { name, email, phone, subject, message, cfTurnstileResponse } = req.body;
 
     if (!name || !email || !subject || !message) {
       return res.status(400).json({ error: "Missing required fields" });
+    }
+
+    if (!cfTurnstileResponse) {
+      return res.status(400).json({ error: "Missing verification token" });
+    }
+
+    const formData = new FormData();
+    formData.append("secret", env.TURNSTILE_SECRET_KEY);
+    formData.append("response", cfTurnstileResponse);
+    formData.append("remoteip", req.ip);
+
+    const verifyRes = await fetch(
+      "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+      { method: "POST", body: formData },
+    );
+    const verifyResult = await verifyRes.json();
+
+    if (!verifyResult.success) {
+      return res.status(403).json({ error: "Human verification failed. Please try again." });
     }
 
     const sanitized = {
@@ -33,7 +52,7 @@ async function sendContactMessage(req, res) {
     await resend.emails.send({
       from: env.CONTACT_EMAIL_FROM,
       to: env.CONTACT_EMAIL_TO,
-      subject: `New message from [amrloksha151.dev] ${sanitized.subject}`,
+      subject: `New message from [amrloksha151.me] ${sanitized.subject}`,
       html: `<p><strong>${sanitized.name}</strong> sent a message via the contact form.</p><p>See the attached PDF for details.</p>`,
       attachments: [
         {

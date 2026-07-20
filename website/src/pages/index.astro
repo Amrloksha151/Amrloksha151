@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import { getCollection, render } from "astro:content";
 import home from "../data/home.json";
+const base = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '') || '';
 
 const aboutEntry = (await getCollection("about"))[0];
 if (!aboutEntry) throw new Error("About entry not found");
@@ -45,13 +46,13 @@ const { hero, socialLinks, highlights } = home;
       </p>
 
       <div class="mt-10 flex flex-wrap items-center gap-4">
-        <a href={hero.ctaPrimary.href} class="group relative inline-flex items-center gap-2 rounded-full px-7 py-3 text-sm font-medium transition-all duration-300 cursor-pointer" style="border: 1px solid var(--accent); background: color-mix(in srgb, var(--accent) 10%, transparent); color: var(--accent);" onmouseover="this.style.background='color-mix(in srgb, var(--accent) 20%, transparent)'" onmouseout="this.style.background='color-mix(in srgb, var(--accent) 10%, transparent)'">
+        <a href={base + hero.ctaPrimary.href} class="group relative inline-flex items-center gap-2 rounded-full px-7 py-3 text-sm font-medium transition-all duration-300 cursor-pointer" style="border: 1px solid var(--accent); background: color-mix(in srgb, var(--accent) 10%, transparent); color: var(--accent);" onmouseover="this.style.background='color-mix(in srgb, var(--accent) 20%, transparent)'" onmouseout="this.style.background='color-mix(in srgb, var(--accent) 10%, transparent)'">
           {hero.ctaPrimary.label}
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-300 group-hover:translate-x-1">
             <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
           </svg>
         </a>
-        <a href={hero.ctaSecondary.href} class="rounded-full px-7 py-3 text-sm font-medium transition-all duration-300 cursor-pointer" style="border: 1px solid var(--border); color: var(--text-secondary);" onmouseover="this.style.borderColor='var(--border-hover)'; this.style.color='var(--text)'" onmouseout="this.style.borderColor='var(--border)'; this.style.color='var(--text-secondary)'">
+        <a href={base + hero.ctaSecondary.href} class="rounded-full px-7 py-3 text-sm font-medium transition-all duration-300 cursor-pointer" style="border: 1px solid var(--border); color: var(--text-secondary);" onmouseover="this.style.borderColor='var(--border-hover)'; this.style.color='var(--text)'" onmouseout="this.style.borderColor='var(--border)'; this.style.color='var(--text-secondary)'">
           {hero.ctaSecondary.label}
         </a>
       </div>
@@ -116,7 +117,7 @@ const { hero, socialLinks, highlights } = home;
         <div class="mt-8 leading-relaxed text-secondary [&>p]:mt-4 [&>p:first-child]:mt-0">
           <Content />
         </div>
-        <a href="/about" class="group mt-8 inline-flex items-center gap-2 text-sm font-medium transition-colors duration-200 cursor-pointer" style="color: var(--accent);" onmouseover="this.style.color='var(--accent-soft)'" onmouseout="this.style.color='var(--accent)'">
+        <a href={base + '/about'} class="group mt-8 inline-flex items-center gap-2 text-sm font-medium transition-colors duration-200 cursor-pointer" style="color: var(--accent);" onmouseover="this.style.color='var(--accent-soft)'" onmouseout="this.style.color='var(--accent)'">
           Read more
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-300 group-hover:translate-x-1"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </a>

@@ -4,7 +4,7 @@
  */
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "Amrloksha151",
+	"name": "amrloksha151",
 	"main": "src/index.js",
 	"compatibility_date": "2026-07-12",
 	"observability": {
@@ -12,8 +12,8 @@
 	},
 	"vars": {
 		"PORT": "3000",
-		"CONTACT_EMAIL_FROM": "contact@amrloksha151.dev",
-		// "ALLOWED_ORIGINS": "https://amrloksha151.dev,https://www.amrloksha151.dev,http://localhost:3000,http://
+		"CONTACT_EMAIL_FROM": "contact@amrloksha151.me",
+		"ALLOWED_ORIGINS": "amrloksha151.me,www.amrloksha151.me,localhost"
 	},
 	"upload_source_maps": true,
 	"compatibility_flags": [
