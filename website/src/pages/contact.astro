@@ -147,7 +147,7 @@ const base = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '') || '';
       };
 
       try {
-        var res = await fetch(API_URL + "/api/contact", {
+        var res = await fetch(API_URL + "/contact", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data),
