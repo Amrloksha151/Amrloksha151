@@ -5,7 +5,6 @@ import { env } from "cloudflare:workers";
 import { httpServerHandler } from "cloudflare:node";
 
 const app = express();
-app.use(router);
 
 // cors Configuration
 const corsOptions = {
@@ -14,6 +13,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json());
+app.use(router);
 
 app.listen(env.PORT || 3000, () => {
   console.log(`Server is running on port ${env.PORT || 3000}`);
