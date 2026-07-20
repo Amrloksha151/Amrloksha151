@@ -9,7 +9,7 @@ app.use(router);
 
 // cors Configuration
 const corsOptions = {
-    origin: "amrloksha151.me",
+    origin: "https://amrloksha151.me",
 };
 
 app.use(cors(corsOptions));
