@@ -13,7 +13,6 @@
 	"vars": {
 		"PORT": "3000",
 		"CONTACT_EMAIL_FROM": "contact@amrloksha151.me",
-		"ALLOWED_ORIGINS": "amrloksha151.me,www.amrloksha151.me,localhost"
 	},
 	"upload_source_maps": true,
 	"compatibility_flags": [

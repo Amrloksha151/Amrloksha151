@@ -9,7 +9,7 @@ app.use(router);
 
 // cors Configuration
 const corsOptions = {
-    origin: env.ALLOWED_ORIGINS ? env.ALLOWED_ORIGINS.split(',') : '*',
+    origin: "amrloksha151.me",
 };
 
 app.use(cors(corsOptions));
