@@ -141,8 +141,8 @@ function escapeHtml(str) {
   return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
-export async function generateContactPdf(data) {
-  const browser = await puppeteer.launch();
+export async function generateContactPdf(data, browserBinding) {
+  const browser = await puppeteer.launch(browserBinding);
   const page = await browser.newPage();
 
   await page.setJavaScriptEnabled(false);

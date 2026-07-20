@@ -47,7 +47,7 @@ async function sendContactMessage(req, res) {
       RETURNING id, created_at
     `;
 
-    const pdfBuffer = await generateContactPdf(sanitized);
+    const pdfBuffer = await generateContactPdf(sanitized, env.PDF_BROWSER);
 
     await resend.emails.send({
       from: env.CONTACT_EMAIL_FROM,
