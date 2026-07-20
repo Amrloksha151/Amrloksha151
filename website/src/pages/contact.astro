@@ -93,8 +93,8 @@ const base = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '') || '';
 
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
-  <script is:inline>
-    var API_URL = "{apiUrl}";
+  <script>
+    var API_URL = import.meta.env.PUBLIC_API_URL || "http://localhost:3000";
 
     var form = document.getElementById("contact-form");
     var submitBtn = document.getElementById("submit-btn");
