@@ -7,7 +7,7 @@ const html = (data) => `<!DOCTYPE html>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Quicksand:wght@300;400;500;600;700&display=swap');
 
-  @page { margin: 32px; }
+  @page { margin: 0; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     font-family: 'Quicksand', 'Segoe UI', system-ui, sans-serif;
