@@ -41,7 +41,8 @@ const base = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '') || '';
           amrloksha151
           <span class="absolute -bottom-1 left-0 h-[2px] w-0 transition-all duration-300 group-hover:w-full" style="background: var(--accent);"></span>
         </a>
-        <div class="flex items-center gap-6 sm:gap-8">
+        <!-- Desktop nav -->
+        <div class="hidden md:flex items-center gap-6 sm:gap-8">
           <a href={base + '/about'} class="relative text-sm transition-colors duration-200" style="color: var(--text-secondary);" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-secondary)'">
             About
           </a>
@@ -75,7 +76,60 @@ const base = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '') || '';
             </svg>
           </button>
         </div>
+
+        <!-- Mobile controls -->
+        <div class="flex md:hidden items-center gap-2">
+          <button id="music-toggle-mobile" class="flex h-8 w-8 items-center justify-center rounded-lg border transition-all duration-200 cursor-pointer" style="border-color: var(--border); color: var(--text-muted);" aria-label="Toggle background music">
+            <svg id="music-off-icon-mobile" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+              <line x1="23" y1="9" x2="17" y2="15"/>
+              <line x1="17" y1="9" x2="23" y2="15"/>
+            </svg>
+            <svg id="music-on-icon-mobile" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+            </svg>
+          </button>
+          <button id="theme-toggle-mobile" class="flex h-8 w-8 items-center justify-center rounded-lg border transition-all duration-200 cursor-pointer" style="border-color: var(--border); color: var(--text-muted);" aria-label="Toggle theme">
+            <svg id="sun-icon-mobile" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+            </svg>
+            <svg id="moon-icon-mobile" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+          </button>
+          <button id="hamburger-btn" class="flex h-8 w-8 items-center justify-center rounded-lg border transition-all duration-200 cursor-pointer" style="border-color: var(--border); color: var(--text-muted);" aria-label="Toggle menu">
+            <svg id="hamburger-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="4" y1="6" x2="20" y2="6"/>
+              <line x1="4" y1="12" x2="20" y2="12"/>
+              <line x1="4" y1="18" x2="20" y2="18"/>
+            </svg>
+            <svg id="close-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
       </nav>
+
+      <!-- Mobile menu panel -->
+      <div id="mobile-menu" class="md:hidden" style="display: none; border-top: 1px solid var(--border); background: var(--bg); backdrop-filter: blur(12px);">
+        <nav class="mx-auto flex max-w-5xl flex-col gap-1 px-6 py-4">
+          <a href={base + '/about'} class="rounded-lg px-4 py-3 text-sm font-medium transition-colors duration-200" style="color: var(--text-secondary);" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-secondary)'">
+            About
+          </a>
+          <a href={base + '/skills'} class="rounded-lg px-4 py-3 text-sm font-medium transition-colors duration-200" style="color: var(--text-secondary);" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-secondary)'">
+            Skills
+          </a>
+          <a href={base + '/projects'} class="rounded-lg px-4 py-3 text-sm font-medium transition-colors duration-200" style="color: var(--text-secondary);" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-secondary)'">
+            Projects
+          </a>
+          <a href={base + '/contact'} class="rounded-lg px-4 py-3 text-sm font-medium transition-colors duration-200" style="color: var(--text-secondary);" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-secondary)'">
+            Contact
+          </a>
+        </nav>
+      </div>
     </header>
 
     <main class="mx-auto max-w-5xl px-6 pt-28 pb-20">
@@ -108,6 +162,30 @@ const base = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '') || '';
           sun.style.display = isDark ? "none" : "";
           moon.style.display = isDark ? "" : "none";
         }
+        var sunMob = document.getElementById("sun-icon-mobile");
+        var moonMob = document.getElementById("moon-icon-mobile");
+        if (sunMob && moonMob) {
+          sunMob.style.display = isDark ? "none" : "";
+          moonMob.style.display = isDark ? "" : "none";
+        }
+      }
+
+      function updateMusicIcons() {
+        var audio = document.getElementById("bg-music");
+        if (!audio) return;
+        var muted = audio.muted;
+        var off = document.getElementById("music-off-icon");
+        var on = document.getElementById("music-on-icon");
+        if (off && on) {
+          off.style.display = muted ? "" : "none";
+          on.style.display = muted ? "none" : "";
+        }
+        var offMob = document.getElementById("music-off-icon-mobile");
+        var onMob = document.getElementById("music-on-icon-mobile");
+        if (offMob && onMob) {
+          offMob.style.display = muted ? "" : "none";
+          onMob.style.display = muted ? "none" : "";
+        }
       }
 
       function setupToggleButtons() {
@@ -117,12 +195,7 @@ const base = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '') || '';
           themeBtn.addEventListener("click", function () {
             var nowDark = document.documentElement.classList.toggle("dark");
             localStorage.setItem("theme", nowDark ? "dark" : "light");
-            var sun = document.getElementById("sun-icon");
-            var moon = document.getElementById("moon-icon");
-            if (sun && moon) {
-              sun.style.display = nowDark ? "none" : "";
-              moon.style.display = nowDark ? "" : "none";
-            }
+            updateIcons();
           });
         }
 
@@ -135,14 +208,52 @@ const base = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '') || '';
             a.muted = !wasMuted;
             localStorage.setItem("music", wasMuted ? "on" : "off");
             if (wasMuted) a.play();
-            var off = document.getElementById("music-off-icon");
-            var on = document.getElementById("music-on-icon");
-            if (off && on) {
-              off.style.display = wasMuted ? "none" : "";
-              on.style.display = wasMuted ? "" : "none";
-            }
+            updateMusicIcons();
           });
         }
+
+        // Mobile buttons — proxy clicks to desktop buttons
+        var themeBtnMob = document.getElementById("theme-toggle-mobile");
+        if (themeBtnMob && !themeBtnMob._hasListener) {
+          themeBtnMob._hasListener = true;
+          themeBtnMob.addEventListener("click", function () {
+            var btn = document.getElementById("theme-toggle");
+            if (btn) btn.click();
+          });
+        }
+
+        var musicBtnMob = document.getElementById("music-toggle-mobile");
+        if (musicBtnMob && !musicBtnMob._hasListener) {
+          musicBtnMob._hasListener = true;
+          musicBtnMob.addEventListener("click", function () {
+            var btn = document.getElementById("music-toggle");
+            if (btn) btn.click();
+          });
+        }
+      }
+
+      function setupHamburgerMenu() {
+        var btn = document.getElementById("hamburger-btn");
+        if (!btn || btn._hasListener) return;
+        btn._hasListener = true;
+        btn.addEventListener("click", function () {
+          var menu = document.getElementById("mobile-menu");
+          var ham = document.getElementById("hamburger-icon");
+          var close = document.getElementById("close-icon");
+          var open = menu && menu.style.display !== "none";
+          if (menu) menu.style.display = open ? "none" : "";
+          if (ham) ham.style.display = open ? "" : "none";
+          if (close) close.style.display = open ? "none" : "";
+        });
+      }
+
+      function closeMobileMenu() {
+        var menu = document.getElementById("mobile-menu");
+        var ham = document.getElementById("hamburger-icon");
+        var close = document.getElementById("close-icon");
+        if (menu) menu.style.display = "none";
+        if (ham) ham.style.display = "";
+        if (close) close.style.display = "none";
       }
 
       function restoreMusic() {
@@ -154,17 +265,13 @@ const base = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '') || '';
             audio.play();
           }
         }
-        var off = document.getElementById("music-off-icon");
-        var on = document.getElementById("music-on-icon");
-        if (audio && off && on) {
-          off.style.display = audio.muted ? "" : "none";
-          on.style.display = audio.muted ? "none" : "";
-        }
+        updateMusicIcons();
       }
 
       // === Runs before DOM swap — override swap to re-apply theme after Astro strips <html> attributes ===
       document.addEventListener("astro:before-swap", (e) => {
         syncTheme();
+        closeMobileMenu();
         var originalSwap = e.swap;
         e.swap = function () {
           originalSwap();
@@ -172,8 +279,9 @@ const base = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '') || '';
         };
       });
 
-      // === Loading bar ===
+      // === Close mobile menu on nav link click ===
       document.addEventListener("astro:before-preparation", function () {
+        closeMobileMenu();
         var wrap = document.getElementById("nprogress");
         var bar = wrap && wrap.firstElementChild;
         if (!bar) return;
@@ -195,11 +303,17 @@ const base = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '') || '';
         setTimeout(function () { wrap.style.display = "none"; bar.style.width = "0"; }, 200);
       });
 
+      // === Close mobile menu on Escape ===
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") closeMobileMenu();
+      });
+
       // === After full page load ===
       document.addEventListener("astro:page-load", function () {
         syncTheme();
         updateIcons();
         setupToggleButtons();
+        setupHamburgerMenu();
         restoreMusic();
       });
     </script>
